@@ -8,7 +8,15 @@ export const OFFERS_UI_MAX = 3;
 
 /** Visible offers for the "где купить" block (hide when empty). Cap ≤3 MP. */
 export function visibleOffers(page: SeoDetailPage): SeoOffer[] {
-  const fromSnap = Array.isArray(page.offers) ? page.offers.filter((o) => o.url?.trim()) : [];
+  const fromSnap = Array.isArray(page.offers)
+    ? page.offers.filter(
+        (o) =>
+          Boolean(o.url?.trim()) &&
+          o.price != null &&
+          Number.isFinite(o.price) &&
+          o.price > 0,
+      )
+    : [];
   const raw =
     fromSnap.length > 0
       ? fromSnap

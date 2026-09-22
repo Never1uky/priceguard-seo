@@ -59,6 +59,26 @@ describe('visibleOffers / CASE 5–6', () => {
     ).toEqual([]);
   });
 
+
+  it('hides offers without positive price (url-only)', () => {
+    expect(
+      visibleOffers(
+        page({
+          slug: 'x',
+          title: 'Buds',
+          offers: [
+            {
+              marketplace: 'yandex_market',
+              productId: '1',
+              url: 'https://market.yandex.ru/1',
+              price: null,
+            },
+          ],
+        }),
+      ),
+    ).toEqual([]);
+  });
+
   it('shows offers when present', () => {
     const offers = visibleOffers(
       page({
